@@ -4,5 +4,13 @@
 {% block content %}
 
 <h2>Home page</h2>
+{% for n in news %}
+
+{{ n.title }} <br>
+{{ n.date }} <br>
+{{ n.description }} <br>
+{{ n.article }} <br>
+
+{% endfor %}
 
 {% endblock %}
