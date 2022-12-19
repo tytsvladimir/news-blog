@@ -2,17 +2,19 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container mt-4 mb-4">
     <div class="row">
+
+{{ error }}
 
 {% for n in news %}
 
-        <div class="card mt-5" style="width: 18rem;">
+        <div class="card m-2" style="width: 18rem;">
           <img src="{{ n.image }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ n.title }}</h5>
                 <p class="card-text">{{ n.description }}</p>
-<!--                <a href="#" class="btn btn-primary">Read</a>-->
+                <a href="#" class="btn btn-black">Read</a>
             </div>
         </div>
 
@@ -20,27 +22,5 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--{{ n.title }} <br>-->
-<!--{{ n.date }} <br>-->
-<!--<img src="{{ n.image }}" alt="Image" style="width: 50%;"> <br>-->
-<!--{{ n.description }} <br>-->
-<!--{{ n.article }} <br>-->
-
-
 
 {% endblock %}
