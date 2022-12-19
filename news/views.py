@@ -4,7 +4,7 @@ from .models import News
 
 def home(request):
     news = News.objects.all()
-    return render(request, 'home.html', {'page_name': 'All news', 'news': news})
+    return render(request, 'home.html', {'page_name': 'News', 'news': news})
 
 
 def tech_science(request):
