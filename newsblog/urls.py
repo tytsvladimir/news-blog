@@ -27,6 +27,7 @@ urlpatterns = [
     path('business/', views.business, name='business'),
     path('culture/', views.culture, name='culture'),
     path('ideas/', views.ideas, name='ideas'),
+    path('<int:news_pk>/', views.article, name='article'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

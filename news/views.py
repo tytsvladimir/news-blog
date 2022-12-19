@@ -1,11 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import News
 
 
 def home(request):
     news = News.objects.all()
-    # for i in news:
-    #     print(f'Item\n{i.image}')
     return render(request, 'home.html', {'page_name': 'All news', 'news': news})
 
 
@@ -48,3 +46,8 @@ def ideas(request):
         return render(request, 'home.html', {'page_name': 'Ideas', 'news': news})
     else:
         return render(request, 'home.html', {'page_name': 'Ideas', 'error': 'There is no news on this topic.'})
+
+
+def article(request, news_pk):
+    news = get_object_or_404(News, pk=news_pk)
+    return render(request, 'article.html', {'page_name': news.title, 'news': news})
