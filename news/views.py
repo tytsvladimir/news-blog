@@ -19,7 +19,7 @@ def home(request, pk=0):
 
     # Если есть id категории в аргументе, то показываем новости по этой категории
     if pk:
-        news = News.objects.filter(category_id=pk)
+        news = News.objects.filter(category_id=pk).order_by('-date')
         return show_news(news)
     else:
         news = News.objects.all()
@@ -27,6 +27,6 @@ def home(request, pk=0):
 
 
 def article(request, news_pk):
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('-date')
     news = get_object_or_404(News, pk=news_pk)
     return render(request, 'article.html', {'page_name': news.title, 'news': news, 'categories': categories})
