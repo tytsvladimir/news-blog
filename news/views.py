@@ -1,15 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, News
 
-# {i.name: i.id for i in Category.objects.all()}
-categories = Category.objects.all()
-
-
-# for i in categories:
-#     print(f'{i.id} - {i.name}')
-
 
 def home(request, pk=0):
+    categories = Category.objects.all()
+
     def show_news(news):
         # Если есть новости, показываем, если нет, выводим сообщение
         if news:
@@ -32,5 +27,6 @@ def home(request, pk=0):
 
 
 def article(request, news_pk):
+    categories = Category.objects.all()
     news = get_object_or_404(News, pk=news_pk)
     return render(request, 'article.html', {'page_name': news.title, 'news': news, 'categories': categories})
