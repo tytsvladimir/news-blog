@@ -11,7 +11,7 @@
 
             {% for n in news %}
 
-                <div class="card m-2 shadow-lg" style="width: 17rem;" onclick="window.location='{% url 'article' n.id  %}'">
+                <div class="card m-2 shadow-lg" style="width: 17rem; cursor:pointer;" onclick="window.location='{% url 'article' n.id  %}'">
                 <img src="{{ n.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ n.title }}</h5>
