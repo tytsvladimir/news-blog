@@ -27,6 +27,6 @@ def home(request, pk=0):
 
 
 def article(request, news_pk):
-    categories = Category.objects.all().order_by('-date')
+    categories = Category.objects.all()
     news = get_object_or_404(News, pk=news_pk)
     return render(request, 'article.html', {'page_name': news.title, 'news': news, 'categories': categories})
