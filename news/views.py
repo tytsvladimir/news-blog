@@ -22,7 +22,7 @@ def home(request, pk=0):
         news = News.objects.filter(category_id=pk).order_by('-date')
         return show_news(news)
     else:
-        news = News.objects.all()
+        news = News.objects.all().order_by('-date')
         return show_news(news)
 
 
