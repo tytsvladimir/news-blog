@@ -29,13 +29,29 @@
                     <a class="nav-link" href="#">About</a>
                 </li>
             </ul>
+
+            {% if user.is_authenticated %}
             <span class="navbar-text">
-                {% if user.is_authenticated %}
-                Welcome, <a href="#">{{ user.username }}</a><button type="button" class="btn btn-success ms-4">Logout</button>
-                {% else %}
-                <button type="button" class="btn btn-success ms-2">Login</button><button type="button" class="btn btn-outline-success ms-2">Sign Up</button>
-                {% endif %}
+                Welcome, <a href="#">{{ user.username }}</a>
             </span>
+            <span class="navbar-text">
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success ms-4">Logout</button>
+                </form>
+            </span>
+            {% else %}
+            <span class="navbar-text">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{% url 'signin' %}">
+                        <button type="button" class="btn btn-outline-success ms-2 me-2">Sign In</button>
+                    </a>
+                    <a href="{% url 'signup' %}">
+                        <button type="button" class="btn btn-success ms-2 me-2">Sign Up</button>
+                    </a>
+                </div>
+            </span>
+            {% endif %}
         </div>
     </div>
 </nav>

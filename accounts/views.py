@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 
 def sign_up_user(request):
@@ -26,3 +26,22 @@ def sign_up_user(request):
                                                            f'Please choose a new username.'})
         else:
             return render(request, template, {'form': UserCreationForm(), 'error': 'Passwords did not match'})
+
+def sign_in_user(request):
+    template = 'accounts/sign_in_user.html'
+    # определяем что юзер хочет сделать, зарегистрироваться или войти
+    if request.method == 'GET':
+        return render(request, template, {'form': AuthenticationForm()})
+    else:
+        # проверяем соответствие 2-х паролей
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, template, {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
+        else:
+            login(request, user)
+            return redirect('home')
+
+def log_out_user(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')

@@ -28,6 +28,8 @@ urlpatterns = [
 
     # Auth
     path('signup/', accounts_views.sign_up_user, name='signup'),
+    path('logout/', accounts_views.log_out_user, name='logout'),
+    path('signin/', accounts_views.sign_in_user, name='signin'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
