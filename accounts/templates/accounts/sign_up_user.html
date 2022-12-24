@@ -2,10 +2,21 @@
 
 {% block content %}
 
-<form method="POST" action="">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Sign Up</button>
-</form>
+        <!-- SignUp form -->
+        <div class="container m-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 style="color: red;">{{ error }}</h3>
+                    <form method="POST" action="">
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      <button type="submit">Sign Up</button>
+                    </form>
+                </div>
+
+                <!-- Side widgets-->
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
 
 {% endblock %}
