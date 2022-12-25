@@ -32,7 +32,7 @@
 
             {% if user.is_authenticated %}
             <span class="navbar-text">
-                Welcome, <a href="#">{{ user.username }}</a>
+                Welcome, <a class="badge rounded-pill text-bg-light" href="{% url 'profile' %}">{{ user.username }}</a>
             </span>
             <span class="navbar-text">
                 <form action="{% url 'logout' %}" method="POST">
