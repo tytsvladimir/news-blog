@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -12,7 +13,8 @@ class Category(models.Model):
 
 
 class News(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=150)
     image = models.ImageField(upload_to='news/images/')

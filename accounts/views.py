@@ -1,7 +1,9 @@
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from news.models import News
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import NewArticleForm
 from django.contrib.auth import login, logout, authenticate
 
 
@@ -45,3 +47,25 @@ def log_out_user(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
+
+
+def profile(request):
+    articles = News.objects.filter(author=request.user.id)
+    return render(request, 'accounts/profile.html', {'articles': articles})
+
+
+
+def new_article(request):
+    if request.method == 'GET':
+        return render(request, 'accounts/newarticle.html', {'form': NewArticleForm()})
+    else:
+        form = NewArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            article = form.save()
+            article.author_id = request.user.id
+            article.save()
+            return redirect('profile')
+
+        else:
+            return render(request, 'accounts/newarticle.html', {'form': NewArticleForm(),
+                                                                'error': form.errors})
