@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseNotFound
 from .models import Category, News
 
 
@@ -20,3 +21,6 @@ def article(request, news_pk):
     except News.DoesNotExist:
         context = {'page_name': 'Does Not Exist', 'categories': categories, 'error': 'This article does not exist'}
         return render(request, template_name='article.html', context=context)
+
+def pageNotFound(request, exception):
+    return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
