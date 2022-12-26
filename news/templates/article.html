@@ -79,6 +79,20 @@
 {% endif %}
                 <!-- Side widgets-->
                 <div class="col-lg-3">
+                    {% if user.is_authenticated %}
+                        {% if user == news.author %}
+                            <!-- Actions widget-->
+                            <div class="card mb-4 shadow-lg">
+                                <div class="card-header">Actions</div>
+                                <div class="card-body">
+                                    <div class="btn-group btn-edit-delete">
+                                      <a href="{% url 'editarticle' news.id %}" class="btn btn-warning">Edit</a>
+                                      <a href="{% url 'deletearticle' news.id %}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                     <!-- Search widget-->
                     <div class="card mb-4 shadow-lg">
                         <div class="card-header">Search</div>

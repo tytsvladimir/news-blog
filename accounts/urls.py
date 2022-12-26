@@ -20,4 +20,6 @@ urlpatterns = [
     # Profile
     path('', views.profile, name='profile'),
     path('new_article/', views.new_article, name='newarticle'),
+    path('edit_article/<int:pk>', views.edit_article, name='editarticle'),
+    path('delete_article/<int:pk>', views.delete_article, name='deletearticle'),
 ]
