@@ -89,4 +89,4 @@ def edit_article(request, pk):
 def delete_article(request, pk):
     news = get_object_or_404(News, pk=pk, author=request.user.id)
     news.delete()
-    return redirect('home')
+    return redirect('profile')

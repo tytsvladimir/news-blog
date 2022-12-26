@@ -13,7 +13,10 @@
             <form method="POST" enctype='multipart/form-data'>
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{% url 'profile' %}">
+                    <button type="button" class="btn btn-outline-secondary ms-2 me-2">Cancel</button>
+                </a>
             </form>
         </div>
 
