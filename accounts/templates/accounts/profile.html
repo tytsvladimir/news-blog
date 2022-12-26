@@ -6,19 +6,40 @@
 <div class="container m-5">
     <div class="row">
         <div class="col-lg-8">
+
             {% if user.is_authenticated %}
+
             <a href="{% url 'newarticle' %}">
                 <button type="button" class="btn btn-success ms-2 me-2">New article</button>
             </a><br><br><br>
+
             {% if articles %}
-            {% for article in articles %}
-            <a href="{% url 'article' article.id  %}"><p>{{ article.title }}</p></a>
-            {% endfor %}
+
+            <div class="list-group">
+                {% for article in articles %}
+                <a href="{% url 'article' article.id  %}" class="list-group-item list-group-item-action"
+                   aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ article.title }}</h5>
+                        <small>{{ article.date }}</small>
+                    </div>
+                    <p class="mb-1">{{ article.description }}</p>
+                    <small>{{ article.category }}</small>
+                </a>
+                {% endfor %}
+            </div>
+<!--<a class="btn btn-warning btn-sm" href="{# url 'editarticle' article.id #}" role="button">Edit</a>-->
+
             {% else %}
+
             <p>You haven't made any posts yet =(</p>
+
             {% endif %}
+
             {% else %}
+
             <p>Sign In or Sign Up =)</p>
+
             {% endif %}
         </div>
 
