@@ -4,48 +4,59 @@
 
 <!-- SignUp form -->
 <div class="container m-5">
-    <div class="row">
-        <div class="col-lg-8">
 
-            {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
 
-            <a href="{% url 'newarticle' %}">
-                <button type="button" class="btn btn-success ms-2 me-2">New article</button>
-            </a><br><br><br>
+    <a href="{% url 'newarticle' %}">
+        <button type="button" class="btn btn-success ms-2 me-2">New article</button>
+    </a><br><br><br>
 
-            {% if articles %}
-
-            <div class="list-group">
-                {% for article in articles %}
-                <a href="{% url 'article' article.id  %}" class="list-group-item list-group-item-action"
-                   aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ article.title }}</h5>
-                        <small>{{ article.date }}</small>
-                    </div>
-                    <p class="mb-1">{{ article.description }}</p>
-                    <small>{{ article.category }}</small>
-                </a>
-                {% endfor %}
+    {% if articles %}
+    <div class="container">
+        {% for article in articles %}
+        <div class="row">
+            <div class="col">
+                <div class="list-group">
+                    <a href="{% url 'article' article.id  %}" class="list-group-item list-group-item-action"
+                       aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ article.title }}</h5>
+                            <small>{{ article.date|date:'M j Y H:i' }}</small>
+                        </div>
+                        <p class="mb-1">{{ article.description }}</p>
+                        <small>{{ article.category }}</small>
+                    </a>
+                </div>
             </div>
-<!--<a class="btn btn-warning btn-sm" href="{# url 'editarticle' article.id #}" role="button">Edit</a>-->
-
-            {% else %}
-
-            <p>You haven't made any posts yet =(</p>
-
-            {% endif %}
-
-            {% else %}
-
-            <p>Sign In or Sign Up =)</p>
-
-            {% endif %}
+            <div class="col col-sm-3">
+                <div class="card mb-4">
+<!--                    <div class="card-header">Actions</div>-->
+                    <div class="card-body">
+                        <div class="btn-group btn-edit-delete">
+                            <a href="{% url 'editarticle' article.id %}" class="btn btn-warning">Edit</a>
+                            <a href="{% url 'deletearticle' article.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Side widgets-->
-        <div class="col-lg-4"></div>
+        {% endfor %}
     </div>
+
+    <!--<a class="btn btn-warning btn-sm" href="{# url 'editarticle' article.id #}" role="button">Edit</a>-->
+
+    {% else %}
+
+    <p>You haven't made any posts yet =(</p>
+
+    {% endif %}
+
+    {% else %}
+
+    <p>Sign In or Sign Up =)</p>
+
+    {% endif %}
+
 </div>
 
 {% endblock %}

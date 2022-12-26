@@ -12,14 +12,13 @@
 
                 {% for n in news %}
 
-                <div class="card m-2 shadow-lg" style="width: 17rem; cursor:pointer;"
-                     onclick="window.location='{% url 'article' n.id  %}'">
+                <div class="card m-2 shadow-lg" style="width: 17rem;">
                     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
+                        <div class="text-muted fst-italic mb-2">Posted on {{ n.date|date:'M j Y H:i' }}</div>
                         <h5 class="card-title">{{ n.title }}</h5>
                         <p class="card-text">{{ n.description }}</p>
-                        <div class="text-muted fst-italic mb-2">{{ n.date }}</div>
-                        <!--                    <a href="{% url 'article' n.id  %}" class="btn btn-dark">Read</a>-->
+                        <a href="{% url 'article' n.id  %}" class="stretched-link"></a>
                     </div>
                 </div>
 
