@@ -50,7 +50,7 @@ def log_out_user(request):
 
 
 def profile(request):
-    articles = News.objects.filter(author=request.user.id)
+    articles = News.objects.filter(author=request.user.id).order_by('-date')
     return render(request, 'accounts/profile.html', {'articles': articles})
 
 
@@ -61,7 +61,8 @@ def new_article(request):
     else:
         form = NewArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            article = form.save()
+            print(f'******{type(form)}*******')
+            article = form.save(commit=False)
             article.author_id = request.user.id
             article.save()
             return redirect('profile')
