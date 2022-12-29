@@ -15,7 +15,8 @@
                 <div class="card m-2 shadow-lg" style="width: 17rem;">
                     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <div class="text-muted fst-italic mb-2">Posted on {{ n.date|date:'M j Y H:i' }}</div>
+                        <div class="text-muted fst-italic mb-2">Posted on {{ n.date_of_create|date:'M j Y H:i' }}</div>
+                        <div class="text-muted fst-italic mb-2">Last update {{ n.date_of_update|date:'M j Y H:i' }}</div>
                         <h5 class="card-title">{{ n.title }}</h5>
                         <p class="card-text">{{ n.description }}</p>
                         <a href="{% url 'article' n.id  %}" class="stretched-link"></a>

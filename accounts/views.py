@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from news.models import News
+from news.models import Article
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .forms import NewArticleForm
 from django.contrib.auth import login, logout, authenticate
@@ -50,7 +50,7 @@ def log_out_user(request):
 
 
 def profile(request):
-    articles = News.objects.filter(author=request.user.id).order_by('-date')
+    articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
     return render(request, 'accounts/profile.html', {'articles': articles})
 
 
@@ -72,7 +72,7 @@ def new_article(request):
 
 
 def edit_article(request, pk):
-    article = get_object_or_404(News, pk=pk, author=request.user.id)
+    article = get_object_or_404(Article, pk=pk, author=request.user.id)
     if request.method == 'GET':
         form = NewArticleForm(instance=article)
         return render(request, 'accounts/editarticle.html', {'form': form})
@@ -87,6 +87,6 @@ def edit_article(request, pk):
 
 
 def delete_article(request, pk):
-    news = get_object_or_404(News, pk=pk, author=request.user.id)
+    news = get_object_or_404(Article, pk=pk, author=request.user.id)
     news.delete()
     return redirect('profile')
