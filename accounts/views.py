@@ -1,56 +1,33 @@
-from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from news.models import Article
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import logout
+from .services import create_context_sign_up_user, create_context_sign_in_user
 
 
-def sign_up_user(request):
+def sign_up_view(request):
+    '''Показывает форму регистрации'''
     template = 'accounts/sign_up_user.html'
-    # определяем что юзер хочет сделать, зарегистрироваться или войти
-    if request.method == 'GET':
-        return render(request, template, {'form': UserCreationForm()})
+    context = create_context_sign_up_user(request=request)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
     else:
-        # проверяем соответствие 2-х паролей
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                # сохраняем и логинимся
-                user.save()
-                login(request, user)
-                return redirect('home')
-            # если такой юзер уже существует
-            except IntegrityError:
-                return render(request, template, {'form': UserCreationForm(),
-                                                  'error': f'That username has already been taken.\n'
-                                                           f'Please choose a new username.'})
-        else:
-            return render(request, template, {'form': UserCreationForm(), 'error': 'Passwords did not match'})
+        return redirect('profile')
 
 
-def sign_in_user(request):
+def sign_in_view(request):
+    '''Показывает форму входа в личный кабинет'''
     template = 'accounts/sign_in_user.html'
-    # определяем что юзер хочет сделать, зарегистрироваться или войти
-    if request.method == 'GET':
-        return render(request, template, {'form': AuthenticationForm()})
+    context = create_context_sign_in_user(request=request)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
     else:
-        # проверяем соответствие 2-х паролей
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is None:
-            return render(request, template,
-                          {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
-        else:
-            login(request, user)
-            return redirect('home')
+        return redirect('profile')
 
 
-def log_out_user(request):
+def log_out_view(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
 
 
-def profile(request):
-    articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
-    return render(request, 'accounts/profile.html', {'articles': articles})
+def profile_view(request):
+    return render(request, 'accounts/profile.html')

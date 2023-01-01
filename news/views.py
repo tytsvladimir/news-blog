@@ -1,67 +1,51 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
-
-from accounts.forms import NewArticleForm
-from .models import Category, Article
+from .services import *
 
 
-def home(request, pk=0):
-    # Если есть id категории в аргументе, то показываем новости по этой категории
-    categories = Category.objects.all()
-    news = Article.objects.filter(category_id=pk).order_by('-date_of_create') if pk else Article.objects.all().order_by(
-        '-date_of_create')
-    context = {'page_name': categories[pk - 1].name if pk else 'News', 'news': news,
-               'categories': categories, 'error': 'There is no news on this topic.'}
-    return render(request, template_name='home.html', context=context)
+def show_article_list(request, cat_pk=0):
+    '''Показывает все публикации.
+    Если передан pk категории, показывает публикации по этой категории'''
+    context = create_context_for_all(pk=cat_pk)
+    return render(request, template_name='news/home.html', context=context)
 
 
-def article(request, news_pk):
-    categories = Category.objects.all()
-    try:
-        news = Article.objects.get(pk=news_pk)
-        context = {'page_name': news.title, 'news': news, 'categories': categories}
-        return render(request, template_name='article.html', context=context)
-    except Article.DoesNotExist:
-        context = {'page_name': 'Does Not Exist', 'categories': categories, 'error': 'This article does not exist'}
-        return render(request, template_name='article.html', context=context)
+def show_article(request, article_pk):
+    '''Показывает определенную статью'''
+    context = create_context_for_one(pk=article_pk)
+    return render(request, template_name='news/article.html', context=context)
 
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
 
 
-def new_article(request):
-    if request.method == 'GET':
-        return render(request, 'accounts/newarticle.html', {'form': NewArticleForm()})
+def manage(request):
+    articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
+    return render(request, 'news/manage_articles.html', {'articles': articles})
+
+
+def create_new_article(request):
+    '''Показывает форму для создания новой статьи'''
+    template = 'news/newarticle.html'
+    context = create_context_for_new_article(request=request)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
     else:
-        form = NewArticleForm(request.POST, request.FILES)
-        if form.is_valid():
-            print(f'******{type(form)}*******')
-            article = form.save(commit=False)
-            article.author_id = request.user.id
-            article.save()
-            return redirect('profile')
-        else:
-            return render(request, 'accounts/newarticle.html', {'form': NewArticleForm(),
-                                                                'error': form.errors})
+        return redirect('manage')
 
 
 def edit_article(request, pk):
-    article = get_object_or_404(Article, pk=pk, author=request.user.id)
-    if request.method == 'GET':
-        form = NewArticleForm(instance=article)
-        return render(request, 'accounts/editarticle.html', {'form': form})
+    '''Показывает форму для редактирования существующей статьи'''
+    template = 'news/editarticle.html'
+    context = create_context_for_edit_article(request=request, pk=pk)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
     else:
-        form = NewArticleForm(request.POST, request.FILES, instance=article)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        else:
-            return render(request, 'accounts/editarticle.html', {'form': form,
-                                                                 'error': form.errors})
+        return redirect('home')
 
 
 def delete_article(request, pk):
     news = get_object_or_404(Article, pk=pk, author=request.user.id)
     news.delete()
-    return redirect('profile')
+    return redirect('manage')

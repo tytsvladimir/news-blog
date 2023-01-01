@@ -16,7 +16,8 @@
                     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <div class="text-muted fst-italic mb-2">Posted on {{ n.date_of_create|date:'M j Y H:i' }}</div>
-                        <div class="text-muted fst-italic mb-2">Last update {{ n.date_of_update|date:'M j Y H:i' }}</div>
+                        <div class="text-muted fst-italic mb-2">Last update {{ n.date_of_update|date:'M j Y H:i' }}
+                        </div>
                         <h5 class="card-title">{{ n.title }}</h5>
                         <p class="card-text">{{ n.description }}</p>
                         <a href="{% url 'article' n.id  %}" class="stretched-link"></a>
@@ -53,7 +54,7 @@
                             <ul class="list-unstyled mb-0">
                                 {% if categories %}
                                 {% for cat in categories %}
-                                <li><a href="{% url 'news' cat.id %}">{{ cat }}</a></li>
+                                <li><a href="{% url 'home' cat.id %}">{{ cat }}</a></li>
                                 {% endfor %}
                                 {% else %}
                                 <li>Categories not yet</li>
