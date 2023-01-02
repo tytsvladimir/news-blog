@@ -20,7 +20,7 @@
                         </div>
                         <h5 class="card-title">{{ n.title }}</h5>
                         <p class="card-text">{{ n.description }}</p>
-                        <a href="{% url 'article' n.id  %}" class="stretched-link"></a>
+                        <a href="{{ n.get_absolut_url }}" class="stretched-link"></a>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                             <ul class="list-unstyled mb-0">
                                 {% if categories %}
                                 {% for cat in categories %}
-                                <li><a href="{% url 'home' cat.id %}">{{ cat }}</a></li>
+                                <li><a href="{{ cat.get_absolut_url }}">{{ cat }}</a></li>
                                 {% endfor %}
                                 {% else %}
                                 <li>Categories not yet</li>

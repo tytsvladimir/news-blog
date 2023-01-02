@@ -1,15 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, db_index=True)
 
     class Meta:
         verbose_name_plural = 'Category'
 
     def __str__(self):
         return self.name
+
+    def get_absolut_url(self):
+        return reverse('home', kwargs={'cat_pk': self.pk})
 
 
 class Article(models.Model):
@@ -29,6 +33,9 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolut_url(self):
+        return reverse('article', kwargs={'article_pk': self.pk})
+
 
 class Comment(models.Model):
     article_id = models.IntegerField(verbose_name="Article's ID")
@@ -36,4 +43,3 @@ class Comment(models.Model):
     text_of_comment = models.TextField(max_length=300)
     date_of_create = models.DateTimeField(auto_now_add=True)
     date_of_update = models.DateTimeField(auto_now=True)
-

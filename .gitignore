@@ -4,4 +4,7 @@ venv/
 .idea/
 __pycache__/
 media/
+images/
 db.sqlite3
+db-copy.sqlite3
+fill_table_news_article.py
