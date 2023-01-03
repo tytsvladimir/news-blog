@@ -127,7 +127,7 @@
                                 <div class="col">
                                     <ul class="list-unstyled mb-0">
                                         {% for cat in categories %}
-                                        <li><a href="{% url 'home' cat.id %}">{{ cat }}</a></li>
+                                        <li><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
