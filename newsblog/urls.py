@@ -9,7 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', news_views.show_article_list, name='home'),
     path('category/<int:cat_pk>/', news_views.show_article_list, name='home'),
-    path('article/<int:article_pk>/', news_views.show_article, name='article'),
+    path('article/<slug:article_slug>/', news_views.show_article, name='article'),
 
     # Auth
     path('auth/', include('accounts.urls')),

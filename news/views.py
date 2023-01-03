@@ -10,9 +10,9 @@ def show_article_list(request, cat_pk=0):
     return render(request, template_name='news/home.html', context=context)
 
 
-def show_article(request, article_pk):
+def show_article(request, article_slug):
     '''Показывает определенную статью'''
-    context = create_context_for_one(pk=article_pk)
+    context = create_context_for_one(slug=article_slug)
     return render(request, template_name='news/article.html', context=context)
 
 

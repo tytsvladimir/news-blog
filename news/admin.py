@@ -6,6 +6,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -14,6 +15,7 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'article')
     list_editable = ('is_published',)
     list_filter = ('is_published', 'date_of_create', 'date_of_update')
+    prepopulated_fields = {'slug': ('title',)}
     list_per_page = 10
 
 

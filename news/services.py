@@ -6,24 +6,26 @@ from news.forms import NewArticleForm
 def create_context_for_all(pk: int) -> dict:
     '''Возвращает контекст для просмотра списка статей'''
     categories = Category.objects.all()
+    print(f'CAT ******* {categories}')
     if not pk:
         page_name = 'News'
         news = Article.objects.all().order_by('-date_of_create')
         error = 'There is no news.'
     else:
-        page_name = categories[pk - 1].name
+        page_name = Category.objects.get(pk=pk).name
         news = Article.objects.filter(category_id=pk).order_by('-date_of_create')
         error = 'There is no news on this topic.'
 
     return {'page_name': page_name, 'news': news, 'categories': categories, 'error': error}
 
 
-def create_context_for_one(pk: int) -> dict:
+def create_context_for_one(slug: str) -> dict:
     '''Возвращает контекст для просмотра определенной статьи'''
     categories = Category.objects.all()
     error = 'This article does not exist'
     try:
-        news = Article.objects.get(pk=pk)
+        # news = Article.objects.get(slug)
+        news = get_object_or_404(Article, slug=slug)
         page_name = news.title
     except Article.DoesNotExist:
         news = None

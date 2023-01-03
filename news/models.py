@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 from django.urls import reverse
+from autoslug import AutoSlugField
 
 
 class Category(models.Model):
@@ -17,6 +19,11 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('home', kwargs={'cat_pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
 
 
 class Article(models.Model):
@@ -40,7 +47,12 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article', kwargs={'article_pk': self.pk})
+        return reverse('article', kwargs={'article_slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(str(self.title) + '-' + str(self.author))
+        return super().save(*args, **kwargs)
 
 
 class Comment(models.Model):
