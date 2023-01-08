@@ -15,9 +15,9 @@
                 <div class="card m-2 shadow-lg" style="width: 17rem;">
                     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <div class="text-muted fst-italic mb-2">Posted on {{ n.date_of_create|date:'M j Y H:i' }}</div>
-                        <div class="text-muted fst-italic mb-2">Last update {{ n.date_of_update|date:'M j Y H:i' }}
-                        </div>
+                        <div class="text-muted fst-italic mb-2">{{ n.date_of_create|date:'M j Y H:i' }}</div>
+<!--                        <div class="text-muted fst-italic mb-2">Last update {# n.date_of_update|date:'M j Y H:i' #}-->
+<!--                        </div>-->
                         <h5 class="card-title">{{ n.title }}</h5>
                         <p class="card-text">{{ n.description }}</p>
                         <a href="{{ n.get_absolute_url }}" class="stretched-link"></a>
@@ -29,6 +29,16 @@
                 {% else %}
                 <h3>{{ error }}</h3>
                 {% endif %}
+
+                <nav aria-label="...">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">1</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    </ul>
+                </nav>
 
             </div>
         </div>

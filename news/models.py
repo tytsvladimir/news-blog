@@ -26,16 +26,23 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
 
+def user_directory_path(instance, filename):
+    return f'news/images/user_{instance.author.id}/' \
+           f'{instance.date_of_create.year}/' \
+           f'{instance.date_of_create.month}/' \
+           f'{instance.date_of_create.day}/{filename}'
+
+
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to='news/images/%Y/%m/%d/')
-    article = models.TextField()
     date_of_create = models.DateTimeField(auto_now_add=True)
     date_of_update = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to=user_directory_path)
+    article = models.TextField()
     is_published = models.BooleanField(default=True)
 
     class Meta:
