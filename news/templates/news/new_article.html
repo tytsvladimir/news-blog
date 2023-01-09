@@ -1,0 +1,20 @@
+{% extends 'accounts/base_profile.html' %}
+
+{% block profile %}
+
+<p class="h1 mt-3 mb-3">Create new article</p>
+
+{% if error %}
+<p style="color: red;">Bad data, try again.</p>
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+<form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{% url 'manage_articles' %}">
+        <button type="button" class="btn btn-outline-secondary ms-2 me-2">Cancel</button>
+    </a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'accounts/base_profile.html' %}
+
+{% block profile %}
+
+
+{% if categories %}
+{% for category in categories %}
+
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="mb-1">#{{ category.id }} {{ category.name }}</h5>
+        <a href="{% url 'edit_category' category.id %}" class="btn btn-outline-warning btn-sm m-1">Edit</a>
+        <a href="{% url 'delete_category' category.id %}" class="btn btn-outline-danger btn-sm m-1">Delete</a>
+    </div>
+</div>
+<br>
+{% endfor %}
+
+{% else %}
+
+<p>You haven't made any posts yet =(</p>
+
+{% endif %}
+
+
+{% endblock %}

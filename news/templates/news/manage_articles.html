@@ -1,61 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'accounts/base_profile.html' %}
 
-{% block content %}
+{% block profile %}
 
-<div class="container m-5">
-
-    {% if user.is_authenticated %}
-
-    <a href="{% url 'newarticle' %}">
-        <button type="button" class="btn btn-success ms-2 me-2">New article</button>
-    </a><br><br><br>
-
-    {% if articles %}
-    <div class="container">
-        {% for article in articles %}
-        <div class="row">
-            <div class="col">
-                <div class="list-group">
-                    <a href="{{ article.get_absolute_url }}" class="list-group-item list-group-item-action"
-                       aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ article.title }}</h5>
-                            <small>{{ article.date_of_create|date:'M j Y H:i' }}</small>
-                        </div>
-                        <p class="mb-1">{{ article.description }}</p>
-                        <small>{{ article.category }}</small>
-                    </a>
-                </div>
-            </div>
-            <div class="col col-sm-3">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="btn-group btn-edit-delete">
-                            <a href="{% url 'editarticle' article.id %}" class="btn btn-warning">Edit</a>
-                            <a href="#" class="btn btn-secondary">Withdraw</a>
-                            <a href="{% url 'deletearticle' article.id %}" class="btn btn-danger">Delete</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{% if articles %}
+{% for article in articles %}
+<div class="card mb-2">
+    <div class="card-body">
+        <a class="badge bg-secondary text-decoration-none link-light m-1" href="#!">
+            {{ article.category }}</a>
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">#{{ article.id }} {{ article.title }}</h5>
+            <small>{{ article.date_of_create|date:'M j Y H:i' }}</small>
         </div>
-        {% endfor %}
+        <p class="card-text">{{ article.description }}</p>
+        <a href="{{ article.get_absolute_url }}" class="btn btn-outline-primary btn-sm m-1">Read</a>
+        <a href="{% url 'edit_article' article.id %}" class="btn btn-outline-warning btn-sm m-1">Edit</a>
+        <a href="#" class="btn btn-outline-secondary btn-sm m-1">Withdraw</a>
+        <a href="{% url 'delete_article' article.id %}" class="btn btn-outline-danger btn-sm m-1">Delete</a>
     </div>
-
-    <!--<a class="btn btn-warning btn-sm" href="{# url 'editarticle' article.id #}" role="button">Edit</a>-->
-
-    {% else %}
-
-    <p>You haven't made any posts yet =(</p>
-
-    {% endif %}
-
-    {% else %}
-
-    <p>Sign In or Sign Up =)</p>
-
-    {% endif %}
-
 </div>
+<br>
+{% endfor %}
+{% else %}
+<p>You haven't made any posts yet =(</p>
+{% endif %}
 
 {% endblock %}

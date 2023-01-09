@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
 from .services import *
 
 
@@ -20,24 +20,24 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
 
 
-def manage(request):
+def manage_articles(request):
     articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
     return render(request, 'news/manage_articles.html', {'articles': articles})
 
 
 def create_new_article(request):
     '''Показывает форму для создания новой статьи'''
-    template = 'news/newarticle.html'
+    template = 'news/new_article.html'
     context = create_context_for_new_article(request=request)
     if isinstance(context, dict):
         return render(request, template_name=template, context=context)
     else:
-        return redirect('manage')
+        return redirect('manage_articles')
 
 
 def edit_article(request, pk):
     '''Показывает форму для редактирования существующей статьи'''
-    template = 'news/editarticle.html'
+    template = 'news/edit_article.html'
     context = create_context_for_edit_article(request=request, pk=pk)
     if isinstance(context, dict):
         return render(request, template_name=template, context=context)
@@ -48,4 +48,34 @@ def edit_article(request, pk):
 def delete_article(request, pk):
     news = get_object_or_404(Article, pk=pk, author=request.user.id)
     news.delete()
-    return redirect('manage')
+    return redirect('manage_articles')
+
+
+def manage_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'news/manage_categories.html', {'categories': categories})
+
+
+def new_category(request):
+    template = 'news/new_category.html'
+    context = create_context_for_new_category(request=request)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
+    else:
+        return redirect('manage_categories')
+
+
+def edit_category(request, pk):
+    '''Показывает форму для редактирования существующей категории'''
+    template = 'news/edit_category.html'
+    context = create_context_for_edit_category(request=request, pk=pk)
+    if isinstance(context, dict):
+        return render(request, template_name=template, context=context)
+    else:
+        return redirect('manage_categories')
+
+
+def delete_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    return redirect('manage_categories')

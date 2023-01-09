@@ -24,3 +24,6 @@ footer {
     width: 50px;
     color: red;
 }
+input {
+    border-color: red;
+}
