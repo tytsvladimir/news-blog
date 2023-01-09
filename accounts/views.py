@@ -20,7 +20,7 @@ def sign_in_view(request):
     if isinstance(context, dict):
         return render(request, template_name=template, context=context)
     else:
-        return redirect('profile')
+        return redirect('home')
 
 
 def log_out_view(request):

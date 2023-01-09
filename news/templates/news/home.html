@@ -1,89 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'news/base_news.html' %}
 
-{% block content %}
 
-<div class="container mt-4 mb-4">
-    <h1>{{ page_name }}</h1>
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="row">
+{% block news %}
 
-                {% if news %}
+<h1>{{ page_name }}</h1>
 
-                {% for n in news %}
+{% if news %}
 
-                <div class="card m-2 shadow-lg" style="width: 17rem;">
-                    <img src="{{ n.image.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <div class="text-muted fst-italic mb-2">{{ n.date_of_create|date:'M j Y H:i' }}</div>
-<!--                        <div class="text-muted fst-italic mb-2">Last update {# n.date_of_update|date:'M j Y H:i' #}-->
-<!--                        </div>-->
-                        <h5 class="card-title">{{ n.title }}</h5>
-                        <p class="card-text">{{ n.description }}</p>
-                        <a href="{{ n.get_absolute_url }}" class="stretched-link"></a>
-                    </div>
-                </div>
+{% for n in news %}
 
-                {% endfor %}
-
-                {% else %}
-                <h3>{{ error }}</h3>
-                {% endif %}
-
-                <nav aria-label="...">
-                    <ul class="pagination pagination-lg justify-content-end">
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1</span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    </ul>
-                </nav>
-
-            </div>
-        </div>
-        <!-- Side widgets-->
-        <div class="col-lg-3">
-            <!-- Search widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..."
-                               aria-label="Enter search term..." aria-describedby="button-search">
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Categories widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <ul class="list-unstyled mb-0">
-                                {% if categories %}
-                                {% for cat in categories %}
-                                <li><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
-                                {% endfor %}
-                                {% else %}
-                                <li>Categories not yet</li>
-                                {% endif %}
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- Side widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
-                    and feature the Bootstrap 5 card component!
-                </div>
-            </div>
-        </div>
+<div class="card m-2 shadow-lg" style="width: 17rem;">
+    <img src="{{ n.image.url }}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <div class="text-muted fst-italic mb-2">{{ n.date_of_create|date:'M j Y H:i' }}</div>
+        <!--                        <div class="text-muted fst-italic mb-2">Last update {# n.date_of_update|date:'M j Y H:i' #}-->
+        <!--                        </div>-->
+        <h5 class="card-title">{{ n.title }}</h5>
+        <p class="card-text">{{ n.description }}</p>
+        <a href="{{ n.get_absolute_url }}" class="stretched-link"></a>
     </div>
 </div>
 
+{% endfor %}
+
+{% else %}
+
+<h3>{{ error }}</h3>
+
+{% endif %}
+{% endblock %}
+
+{% block actions %}
+
+{% if user.is_authenticated %}
+<!-- Action widget-->
+<div class="card mb-4 shadow-lg">
+    <div class="card-header">Action</div>
+    <div class="card-body">
+        <div class="input-group">
+            <a href="{% url 'new_article' %}" class="btn btn-outline-success btn-sm m-1">Create a new article</a>
+            <a href="{% url 'manage_articles' %}" class="btn btn-outline-warning btn-sm m-1">Manage articles</a>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
