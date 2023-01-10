@@ -4,12 +4,11 @@ from news import views as news_views
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', news_views.show_article_list, name='home'),
-    path('category/<int:cat_pk>/', news_views.show_article_list, name='home'),
-    path('article/<slug:article_slug>/', news_views.show_article, name='article'),
+    path('', news_views.ArticlesView.as_view(), name='home'),
+    path('category/<slug:cat_slug>/', news_views.ArticlesCategoryView.as_view(), name='home'),
+    path('article/<slug:article_slug>/', news_views.ArticleShowView.as_view(), name='article'),
 
     # Auth
     path('auth/', include('accounts.urls')),

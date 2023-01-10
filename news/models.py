@@ -18,7 +18,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('home', kwargs={'cat_pk': self.pk})
+        return reverse('home', kwargs={'cat_slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -6,7 +6,7 @@ urlpatterns = [
     # Manage articles
     path('articles/', manage_articles, name='manage_articles'),
     path('categories/', manage_categories, name='manage_categories'),
-    path('new_article/', create_new_article, name='new_article'),
+    path('new_article/', ArticleCreateView.as_view(), name='new_article'),
     path('edit_article/<int:pk>', edit_article, name='edit_article'),
     path('delete_article/<int:pk>', delete_article, name='delete_article'),
     path('new_category/', new_category, name='new_category'),
