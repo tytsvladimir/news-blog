@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound, HttpResponse
 from django.urls import reverse_lazy
 
 from .services import *
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import *
 
 
@@ -15,6 +15,7 @@ from .models import *
 #     return render(request, template_name='news/home.html', context=context)
 
 class ArticlesView(ListView):
+    '''Отображение списка всех публикаций'''
     model = Article
     template_name = 'news/home.html'
     context_object_name = 'news'
@@ -33,6 +34,7 @@ class ArticlesView(ListView):
 
 
 class ArticlesCategoryView(ListView):
+    '''Отображение списка публикаций по выбранной категории'''
     model = Article
     template_name = 'news/home.html'
     context_object_name = 'news'
@@ -57,6 +59,7 @@ class ArticlesCategoryView(ListView):
 
 
 class ArticleShowView(DetailView):
+    '''Отображение выбранной публикации'''
     model = Article
     template_name = 'news/article.html'
     slug_url_kwarg = 'article_slug'
@@ -64,17 +67,34 @@ class ArticleShowView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['author_id'] = 1
-        print(f'CONTEXT***{context}')
+        context['page_name'] = context[self.context_object_name].title
         return context
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
 
 
-def manage_articles(request):
-    articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
-    return render(request, 'news/manage_articles.html', {'articles': articles})
+# def manage_articles(request):
+#     articles = Article.objects.filter(author=request.user.id).order_by('-date_of_create')
+#     return render(request, 'news/manage_articles.html', {'articles': articles})
+
+
+class ManageArticlesView(ListView):
+    '''Отображение списка всех публикаций'''
+    model = Article
+    template_name = 'news/manage_articles.html'
+    context_object_name = 'articles'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        page_name = 'Manage'
+        context = super().get_context_data(**kwargs)
+        context['page_name'] = page_name
+        return context
+
+    def get_queryset(self):
+        return Article.objects.filter(author_id=self.request.user.id)
 
 
 # def create_new_article(request):
@@ -88,18 +108,32 @@ def manage_articles(request):
 
 
 class ArticleCreateView(CreateView):
+    '''Отображение формы для добавления новой публикации'''
     form_class = ArticleForm
     template_name = 'news/new_article.html'
     success_url = reverse_lazy('manage_articles')
 
-def edit_article(request, pk):
-    '''Показывает форму для редактирования существующей статьи'''
-    template = 'news/edit_article.html'
-    context = create_context_for_edit_article(request=request, pk=pk)
-    if isinstance(context, dict):
-        return render(request, template_name=template, context=context)
-    else:
-        return redirect('home')
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.author_id = self.request.user.id
+        instance.save()
+        return super().form_valid(form)
+
+
+# def edit_article(request, pk):
+#     '''Показывает форму для редактирования существующей статьи'''
+#     template = 'news/edit_article.html'
+#     context = create_context_for_edit_article(request=request, pk=pk)
+#     if isinstance(context, dict):
+#         return render(request, template_name=template, context=context)
+#     else:
+#         return redirect('home')
+
+
+class ArticleEditView(UpdateView):
+    form_class = ArticleForm
+    model = Article
+    template_name = 'news/edit_article.html'
 
 
 def delete_article(request, pk):
