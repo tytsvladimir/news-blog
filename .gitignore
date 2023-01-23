@@ -12,3 +12,4 @@ news/view_def.py
 news/services.py
 accounts/view_def.py
 accounts/services.py
+cache/
