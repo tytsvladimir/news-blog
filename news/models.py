@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-from autoslug import AutoSlugField
 
 
 class Category(models.Model):
+    objects = None
     name = models.CharField(max_length=32, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
 
@@ -34,6 +34,7 @@ def user_directory_path(instance, filename):
 
 
 class Article(models.Model):
+    objects = None
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)

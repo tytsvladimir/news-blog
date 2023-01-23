@@ -3,7 +3,9 @@
 
 {% block news %}
 
-<h1>{{ page_name }}</h1>
+<div class="d-flex justify-content-between">
+    <h1>{{ page_name }}</h1>
+</div>
 
 {% if news %}
 
@@ -26,6 +28,7 @@
 {% else %}
 
 <h3>{{ error }}</h3>
+<p>Create new article</p>
 
 {% endif %}
 {% endblock %}

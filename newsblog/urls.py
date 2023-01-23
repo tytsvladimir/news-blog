@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', news_views.ArticlesView.as_view(), name='home'),
     path('category/<slug:cat_slug>/', news_views.ArticlesCategoryView.as_view(), name='home'),
     path('article/<slug:article_slug>/', news_views.ArticleShowView.as_view(), name='article'),
