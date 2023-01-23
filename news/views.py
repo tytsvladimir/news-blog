@@ -19,7 +19,7 @@ class ArticlesView(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Article.objects.filter(is_published=True)
+        return Article.objects.filter(is_published=True) # select_related('category')
 
 
 class ArticlesCategoryView(DataMixin, ListView):

@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -18,6 +18,11 @@ class SignUpView(DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(page_name='Sign Up')
         return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
 
 
 class SignInView(DataMixin, LoginView):

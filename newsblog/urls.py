@@ -12,6 +12,9 @@ urlpatterns = [
 
     # Auth
     path('accounts/', include('accounts.urls')),
+
+    # Debug
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 # if settings.DEBUG:
