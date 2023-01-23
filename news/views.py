@@ -11,11 +11,7 @@ from .utils import *
 
 class ArticlesView(DataMixin, ListView):
     '''Отображает список всех публикаций'''
-    model = Article
     template_name = 'news/home.html'
-    context_object_name = 'news'
-    allow_empty = False
-    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,11 +24,7 @@ class ArticlesView(DataMixin, ListView):
 
 class ArticlesCategoryView(DataMixin, ListView):
     '''Отображает список всех публикаций по выбранной категории'''
-    model = Article
     template_name = 'news/home.html'
-    context_object_name = 'news'
-    allow_empty = False
-    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,10 +38,8 @@ class ArticlesCategoryView(DataMixin, ListView):
 
 class ArticleShowView(DataMixin, DetailView):
     '''Отображает выбранную публикацию'''
-    model = Article
     template_name = 'news/article.html'
     slug_url_kwarg = 'article_slug'
-    context_object_name = 'news'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
