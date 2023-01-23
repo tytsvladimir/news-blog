@@ -1,26 +1,36 @@
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
-from .services import create_context_sign_up_user, create_context_sign_in_user
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .utils import *
+from .forms import *
 
 
-def sign_up_view(request):
-    '''Показывает форму регистрации'''
-    template = 'accounts/sign_up_user.html'
-    context = create_context_sign_up_user(request=request)
-    if isinstance(context, dict):
-        return render(request, template_name=template, context=context)
-    else:
-        return redirect('profile')
+class SignUpView(DataMixin, CreateView):
+    form_class = SignUpViewForm
+    template_name = 'accounts/sign_up_user.html'
+    success_url = reverse_lazy('signin')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(page_name='Sign Up')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
-def sign_in_view(request):
-    '''Показывает форму входа в личный кабинет'''
-    template = 'accounts/sign_in_user.html'
-    context = create_context_sign_in_user(request=request)
-    if isinstance(context, dict):
-        return render(request, template_name=template, context=context)
-    else:
-        return redirect('home')
+class SignInView(DataMixin, LoginView):
+    form_class = SignInViewForm
+    template_name = 'accounts/sign_in_user.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(page_name='Sign In')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 def log_out_view(request):

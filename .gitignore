@@ -10,3 +10,5 @@ db-copy.sqlite3
 fill_table_news_article.py
 news/view_def.py
 news/services.py
+accounts/view_def.py
+accounts/services.py

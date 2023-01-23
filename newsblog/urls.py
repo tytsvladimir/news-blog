@@ -11,7 +11,7 @@ urlpatterns = [
     path('article/<slug:article_slug>/', news_views.ArticleShowView.as_view(), name='article'),
 
     # Auth
-    path('auth/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 # if settings.DEBUG:

@@ -1,24 +1,22 @@
-from django import forms
+from django.forms import TextInput, CharField, FileField, FileInput, Textarea, CheckboxInput, ModelForm
 from news.models import Article, Category
 
 
-class ArticleForm(forms.ModelForm):
+class ArticleForm(ModelForm):
+    attrs = {'class ': 'form-control'}
+    title = CharField(label='Username', widget=TextInput(attrs=attrs))
+    description = CharField(label='Description', widget=TextInput(attrs=attrs))
+    image = FileField(label='Image', widget=FileInput(attrs=attrs))
+    article = CharField(label='Article', widget=Textarea(attrs=attrs))
+    is_published = CheckboxInput(attrs={'class': 'form-check-input'})
     class Meta:
         model = Article
         fields = ['category', 'title', 'description', 'image', 'article', 'is_published']
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'image': forms.ImageField(attrs={'class': 'form-control', 'type': 'file'}),
-            'article': forms.Textarea(attrs={'class': 'form-control'}),
-            'is_published': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
 
 
-class CategoryForm(forms.ModelForm):
+class CategoryForm(ModelForm):
+    attrs = {'class ': 'form-control'}
+    name = CharField(label='Name', widget=TextInput(attrs=attrs))
     class Meta:
         model = Category
         fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'})
-        }

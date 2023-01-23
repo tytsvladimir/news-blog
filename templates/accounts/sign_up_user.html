@@ -4,8 +4,7 @@
 
 <!-- SignUp form -->
 <div class="position-absolute top-50 start-50 translate-middle">
-    <h3 style="color: red;">{{ error }}</h3>
-    <form method="POST" action="">
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success fixed-right">Sign Up</button>
