@@ -87,7 +87,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class ArticleEditView(UpdateView):
+class ArticleUpdateView(UpdateView):
     '''Отображает форму для редактирования публикации'''
     form_class = ArticleForm
     model = Article

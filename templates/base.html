@@ -41,7 +41,7 @@
                            aria-expanded="false">{{ user.username }}</a>
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
                             <li><a class="dropdown-item" href="{% url 'admin:index' %}">Administration</a></li>
                             <li>
                                 <hr class="dropdown-divider">

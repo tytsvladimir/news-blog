@@ -14,28 +14,26 @@
                                 <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{% url 'manage_articles' %}">Articles</a>
+                                <a class="nav-link" aria-current="page" href="{% url 'manage_articles' %}">My articles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'manage_categories' %}">Categories</a>
+                                <a class="nav-link" href="{% url 'settings' %}">Settings</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                    href="{% url 'manage_articles' %}" role="button"
-                                   aria-expanded="false">Manage</a>
+                                   aria-expanded="false">Management</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{% url 'new_article' %}">Create article</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'new_category' %}">Create category</a>
-                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'manage_articles' %}">Articles</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'manage_categories' %}">Categories</a></li>
+<!--                                    <li><a class="dropdown-item" href="{% url 'new_article' %}">Create article</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="{% url 'new_category' %}">Create category</a></li>-->
                                     <li><a class="dropdown-item disabled" href="#"> ### </a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">###</a></li>
+                                    <li><a class="dropdown-item disabled" href="#">###</a></li>
                                 </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled" href="#">Link</a>
                             </li>
                         </ul>
 

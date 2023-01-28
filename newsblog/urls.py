@@ -7,7 +7,8 @@ from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('', cache_page(60)(news_views.ArticlesView.as_view()), name='home'),
+    path('', news_views.ArticlesView.as_view(), name='home'),
+    # path('', cache_page(60)(news_views.ArticlesView.as_view()), name='home'),
     path('category/<slug:cat_slug>/', news_views.ArticlesCategoryView.as_view(), name='home'),
     path('article/<slug:article_slug>/', news_views.ArticleShowView.as_view(), name='article'),
 
