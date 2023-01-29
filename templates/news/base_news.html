@@ -4,7 +4,7 @@
 
 <div class="container mt-3">
     <div class="row mt-3">
-        <div class="col-9">
+        <div class="col">
             <div class="row">
 
                 {% block news %} {% endblock %}
@@ -12,37 +12,37 @@
             </div>
         </div>
         <!-- Side widgets-->
-        <div class="col-3">
+<!--        <div class="col-3">-->
 
-            {% block actions %} {% endblock %}
+<!--            {% block actions %} {% endblock %}-->
 
-            <!-- Categories widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <ul class="list-unstyled mb-0">
-                                {% if categories %}
-                                {% for cat in categories %}
-                                <li><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>
-                                {% endfor %}
-                                {% else %}
-                                <li>Categories not yet</li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Side widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
-                    and feature the Bootstrap 5 card component!
-                </div>
-            </div>
-        </div>
+<!--            &lt;!&ndash; Categories widget&ndash;&gt;-->
+<!--            <div class="card mb-4 shadow-lg">-->
+<!--                <div class="card-header">Categories</div>-->
+<!--                <div class="card-body">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col">-->
+<!--                            <ul class="list-unstyled mb-0">-->
+<!--                                {% if categories %}-->
+<!--                                {% for cat in categories %}-->
+<!--                                <li><a href="{{ cat.get_absolute_url }}">{{ cat }}</a></li>-->
+<!--                                {% endfor %}-->
+<!--                                {% else %}-->
+<!--                                <li>Categories not yet</li>-->
+<!--                                {% endif %}-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Side widget&ndash;&gt;-->
+<!--            <div class="card mb-4 shadow-lg">-->
+<!--                <div class="card-header">Side Widget</div>-->
+<!--                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,-->
+<!--                    and feature the Bootstrap 5 card component!-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 

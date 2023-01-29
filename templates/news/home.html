@@ -7,7 +7,7 @@
 
 {% for n in news %}
 
-<div class="card m-2 shadow-lg {% if n.author == user %}text-bg-success{% endif %}" style="width: 19rem;">
+<div class="card m-2 shadow-lg {% if n.author == user %}border border-danger{% endif %}" style="width: 19rem;">
     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
     <div class="card-body">
         <div class="text-muted fst-italic mb-2">{{ n.date_of_create|date:'M j Y H:i' }}</div>

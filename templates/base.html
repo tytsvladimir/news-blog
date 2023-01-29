@@ -27,15 +27,10 @@
             </form>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!--                                        <li class="nav-item">-->
-                    <!--                                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">News</a>-->
-                    <!--                                        </li>-->
-                    <!--                                        <li class="nav-item">-->
-                    <!--                                            <a class="nav-link" href="#">Features</a>-->
-                    <!--                                        </li>-->
-                    <!--                                        <li class="nav-item">-->
-                    <!--                                            <a class="nav-link" href="#">About</a>-->
-                    <!--                                        </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" aria-current="page"-->
+                    <!--                           href="#">{{ page_name }}</a>-->
+                    <!--                    </li>-->
                 </ul>
 
                 {% if user.is_authenticated %}
@@ -102,6 +97,24 @@
                         </a>
                     </div>
                 </span>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark p-0">
+        <div class="container container-fluid text-center">
+            <div class="d-flex w-100 justify-content-between">
+                {% if categories %}
+                {% for cat in categories %}
+                <div class="w-100 border-start border-top border-end">
+                    <a class="nav-link {% if page_name == cat.name %} active bg-light text-dark{% endif %} text-light text-uppercase"
+                       aria-current="page"
+                       href="{{ cat.get_absolute_url }}">{{ cat }}</a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="col">Categories not yet</div>
                 {% endif %}
             </div>
         </div>

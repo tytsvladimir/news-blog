@@ -56,7 +56,7 @@ class MyArticlesView(ListView):
     model = Article
     template_name = 'news/manage_articles.html'
     context_object_name = 'articles'
-    allow_empty = False
+    # allow_empty = False
     extra_context = {'page_name': 'My articles'}
 
     def get_queryset(self):
