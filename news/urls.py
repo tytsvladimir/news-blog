@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     # Manage articles
-    path('articles/', ManageArticlesView.as_view(), name='manage_articles'),
+    path('articles/', MyArticlesView.as_view(), name='manage_articles'),
     path('categories/', ManageCategoriesView.as_view(), name='manage_categories'),
     path('new_article/', ArticleCreateView.as_view(), name='new_article'),
     path('edit_article/<int:pk>', ArticleUpdateView.as_view(), name='edit_article'),

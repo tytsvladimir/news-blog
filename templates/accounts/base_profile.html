@@ -11,13 +11,13 @@
                     <div class="container py-5">
                         <ul class="nav nav-tabs mb-4">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
+                                <a class="{% if page_name == 'Profile' %}nav-link active{% else %}nav-link{% endif %}" aria-current="page" href="{% url 'profile' %}">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="{% url 'manage_articles' %}">My articles</a>
+                                <a class="{% if page_name == 'My articles' %}nav-link active{% else %}nav-link{% endif %}" aria-current="page" href="{% url 'manage_articles' %}">My articles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                                <a class="{% if page_name == 'Settings' %}nav-link active{% else %}nav-link{% endif %}" href="{% url 'settings' %}">Settings</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"

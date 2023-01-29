@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import *
 from .utils import *
 
 
@@ -19,7 +18,7 @@ class ArticlesView(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Article.objects.filter(is_published=True) # select_related('category')
+        return Article.objects.filter(is_published=True)  # select_related('category')
 
 
 class ArticlesCategoryView(DataMixin, ListView):
@@ -52,17 +51,13 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
 
 
-class ManageArticlesView(ListView):
+class MyArticlesView(ListView):
     '''Отображает список публикаци в личном кабинете'''
     model = Article
     template_name = 'news/manage_articles.html'
     context_object_name = 'articles'
     allow_empty = False
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Manage'
-        return context
+    extra_context = {'page_name': 'My articles'}
 
     def get_queryset(self):
         return Article.objects.filter(author_id=self.request.user.id)
@@ -74,6 +69,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'news/new_article.html'
     success_url = reverse_lazy('manage_articles')
     login_url = reverse_lazy('signin')
+    extra_context = {'page_name': 'Create article'}
 
     def form_valid(self, form):
         context = form.save(commit=False)
@@ -81,22 +77,13 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         context.save()
         return super().form_valid(form)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Create article'
-        return context
-
 
 class ArticleUpdateView(UpdateView):
     '''Отображает форму для редактирования публикации'''
     form_class = ArticleForm
     model = Article
     template_name = 'news/edit_article.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Edit article'
-        return context
+    extra_context = {'page_name': 'Edit article'}
 
 
 def delete_article(request, pk):
@@ -112,11 +99,7 @@ class ManageCategoriesView(ListView):
     template_name = 'news/manage_categories.html'
     context_object_name = 'categories'
     allow_empty = False
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Categories'
-        return context
+    extra_context = {'page_name': 'Categories'}
 
     def get_queryset(self):
         return Category.objects.all()
@@ -127,11 +110,7 @@ class CategoryCreateView(CreateView):
     form_class = CategoryForm
     template_name = 'news/new_category.html'
     success_url = reverse_lazy('manage_categories')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Create category'
-        return context
+    extra_context = {'page_name': 'Create category'}
 
 
 class CategoryEditView(UpdateView):
@@ -139,11 +118,7 @@ class CategoryEditView(UpdateView):
     form_class = CategoryForm
     model = Category
     template_name = 'news/edit_category.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_name'] = 'Edit category'
-        return context
+    extra_context = {'page_name': 'Edit category'}
 
 
 def delete_category(request, pk):
