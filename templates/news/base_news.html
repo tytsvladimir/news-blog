@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<div class="container mt-1 mb-1">
-    <div class="row">
-        <div class="col-lg-8 mt-5">
+<div class="container mt-3">
+    <div class="row mt-3">
+        <div class="col-9">
             <div class="row">
 
                 {% block news %} {% endblock %}
@@ -12,21 +12,10 @@
             </div>
         </div>
         <!-- Side widgets-->
-        <div class="col-lg-3 mt-5">
+        <div class="col-3">
 
             {% block actions %} {% endblock %}
 
-            <!-- Search widget-->
-            <div class="card mb-4 shadow-lg">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..."
-                               aria-label="Enter search term..." aria-describedby="button-search">
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                    </div>
-                </div>
-            </div>
             <!-- Categories widget-->
             <div class="card mb-4 shadow-lg">
                 <div class="card-header">Categories</div>
@@ -43,7 +32,6 @@
                                 {% endif %}
                             </ul>
                         </div>
-
                     </div>
                 </div>
             </div>

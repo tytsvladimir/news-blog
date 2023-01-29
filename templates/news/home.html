@@ -3,15 +3,11 @@
 
 {% block news %}
 
-<div class="d-flex justify-content-between">
-    <h1>{{ page_name }}</h1>
-</div>
-
 {% if news %}
 
 {% for n in news %}
 
-<div class="card m-2 shadow-lg" style="width: 17rem;">
+<div class="card m-2 shadow-lg {% if n.author == user %}text-bg-success{% endif %}" style="width: 19rem;">
     <img src="{{ n.image.url }}" class="card-img-top" alt="...">
     <div class="card-body">
         <div class="text-muted fst-italic mb-2">{{ n.date_of_create|date:'M j Y H:i' }}</div>
@@ -53,21 +49,5 @@
 <p><a href="{% url 'signin' %}">Signin</a> or <a href="{% url 'signup' %}">Signup</a> to create a new article</p>
 {% endif %}
 
-{% endif %}
-{% endblock %}
-
-{% block actions %}
-
-{% if user.is_authenticated %}
-<!-- Action widget-->
-<div class="card mb-4 shadow-lg">
-    <div class="card-header">Action</div>
-    <div class="card-body">
-        <div class="input-group">
-            <a href="{% url 'new_article' %}" class="btn btn-outline-success btn-sm m-1">Create a new article</a>
-            <a href="{% url 'manage_articles' %}" class="btn btn-outline-warning btn-sm m-1">Manage articles</a>
-        </div>
-    </div>
-</div>
 {% endif %}
 {% endblock %}
