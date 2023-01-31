@@ -51,13 +51,19 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound(f'<h1>Page not found</h1>\n{exception}')
 
 
-class MyArticlesView(ListView):
+class MyArticlesView(DataMixin, ListView):
     '''Отображает список публикаци в личном кабинете'''
     model = Article
     template_name = 'news/manage_articles.html'
     context_object_name = 'articles'
+    paginate_by = 5
     # allow_empty = False
-    extra_context = {'page_name': 'My articles'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        c_def['page_name'] = 'My articles'
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Article.objects.filter(author_id=self.request.user.id)
