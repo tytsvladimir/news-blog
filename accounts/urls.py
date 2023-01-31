@@ -9,7 +9,7 @@ urlpatterns = [
 
     # Profile
     path('profile/', profile_view, name='profile'),
-    # path('profile/settings/', settings_view, name='settings'),
-    path('profile/settings/', ChangeUserPasswordView.as_view(), name='settings'),
+    path('profile/settings/', settings_view, name='settings'),
+    path('profile/edit_password_user/', ChangeUserPasswordView.as_view(), name='edit_password_user'),
     path('profile/manage/', include('news.urls')),
 ]

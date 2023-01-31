@@ -41,10 +41,14 @@ def profile_view(request):
     return render(request, 'accounts/profile.html', context=context)
 
 
+def settings_view(request):
+    context = {'page_name': 'Settings'}
+    return render(request, 'accounts/settings.html', context=context)
+
 class ChangeUserPasswordView(PasswordChangeView):
     '''Отображает форму для изменения пароля пользователя'''
     form_class = PasswordChangeForm
     model = User
-    template_name = 'accounts/settings.html'
-    extra_context = {'page_name': 'Settings'}
+    template_name = 'accounts/edit_password_user.html'
+    extra_context = {'page_name': 'Edit password'}
     success_url = reverse_lazy('profile')
