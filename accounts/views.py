@@ -13,7 +13,12 @@ class SignUpView(DataMixin, CreateView):
     form_class = SignUpViewForm
     template_name = 'accounts/sign_up_user.html'
     success_url = reverse_lazy('signin')
-    extra_context = {'page_name': 'Sign Up'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        c_def['page_name'] = 'Sign Up'
+        return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
         user = form.save()
@@ -24,7 +29,12 @@ class SignUpView(DataMixin, CreateView):
 class SignInView(DataMixin, LoginView):
     form_class = SignInViewForm
     template_name = 'accounts/sign_in_user.html'
-    extra_context = {'page_name': 'Sign In'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context()
+        c_def['page_name'] = 'Sign In'
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):
         return reverse_lazy('home')
@@ -44,6 +54,7 @@ def profile_view(request):
 def settings_view(request):
     context = {'page_name': 'Settings'}
     return render(request, 'accounts/settings.html', context=context)
+
 
 class ChangeUserPasswordView(PasswordChangeView):
     '''Отображает форму для изменения пароля пользователя'''
