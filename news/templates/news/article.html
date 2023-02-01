@@ -1,9 +1,7 @@
 {% extends 'news/base_news.html' %}
 
-
 {% block news %}
 {% if news %}
-
 
 <article>
     <!-- Post header-->
@@ -12,7 +10,10 @@
         <h1 class="fw-bolder mb-1">{{ news.title }}</h1>
         <!-- Post meta content-->
         <div class="text-muted fst-italic mb-2">
-            Posted on {{ news.date_of_create|date:'M j Y H:i' }} by {{ news.author }}
+            Posted on {{ news.date_of_create|date:'M j Y H:i' }} by {% if user.is_authenticated %}{% if user == news.author %}You  <br>
+            <a href="{% url 'edit_article' news.id %}" class="btn btn-outline-warning btn-sm m-1">Edit</a>
+            <a href="#" class="btn btn-outline-secondary btn-sm m-1">Withdraw</a>
+            <a href="{% url 'delete_article' news.id %}" class="btn btn-outline-danger btn-sm m-1">Delete</a>{% else %}{{ news.author }}{% endif %}{% else %}{{ news.author }}{% endif %}
         </div>
         <!-- Post categories-->
         <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ news.category }}</a>
@@ -81,30 +82,10 @@
     </div>
 </section>
 
-
 {% else %}
 
 <h3>{{ error }}</h3>
 
-{% endif %}}
-
-{% endblock %}
-
-{% block actions %}
-
-{% if user.is_authenticated %}
-{% if user == news.author %}
-<!-- Action widget-->
-<div class="card mb-4 shadow-lg">
-    <div class="card-header">Action</div>
-    <div class="card-body">
-        <div class="input-group">
-            <a href="{% url 'edit_article' news.id %}" class="btn btn-outline-warning btn-sm m-1">Edit</a>
-            <a href="#" class="btn btn-outline-secondary btn-sm m-1">Withdraw</a>
-            <a href="{% url 'delete_article' news.id %}" class="btn btn-outline-danger btn-sm m-1">Delete</a>
-        </div>
-    </div>
-</div>
 {% endif %}
-{% endif %}
+
 {% endblock %}
