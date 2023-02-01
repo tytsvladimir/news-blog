@@ -1,2 +1,2 @@
 # news-blog
-The largest platform for entrepreneurs and highly qualified specialists of small, medium and large companies.
+Platform for publishing articles. The user has access to a personal account, with the ability to change personal data, manage articles, add new ones, edit, remove from publication and delete.
